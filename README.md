@@ -49,34 +49,132 @@ Display all edge-detected images for comparison.
 
 ## Developed By
 
-- **Name:** ____________________________  
-- **Register No:** ______________________  
+### Name:SUPRIYA PRABHU
+### Register No: 212224240165
 
 ---
 
 ## Output
 
-###  Sobel Edge Detector
-- Detects edges in horizontal and vertical directions  
-- Produces gradient-based edge map  
+### Original Image:
+```
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
 
-###  Prewitt Edge Detector
-- Similar to Sobel but simpler kernel  
-- Detects directional edges  
+image = cv2.imread("C:\\Users\\sup\\OneDrive\\Desktop\\sup\\image.jpg") 
+gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+plt.title('Original Image')
+plt.axis('off')
+```
+### Output:
+<img width="843" height="426" alt="image" src="https://github.com/user-attachments/assets/e1d7592c-664e-437f-8053-e6dae412ae27" />
+
+
+
+###  Sobel Edge Detector
+```
+sobel_x = cv2.Sobel(gray_image, cv2.CV_64F, 1, 0, ksize=5)  
+sobel_y = cv2.Sobel(gray_image, cv2.CV_64F, 0, 1, ksize=5)  
+sobel_combined = cv2.magnitude(sobel_x, sobel_y)  
+plt.imshow(sobel_combined, cmap='gray')
+plt.title('Sobel Edge Detection')
+plt.axis('off')
+```
+
+### Output:
+<img width="820" height="530" alt="image" src="https://github.com/user-attachments/assets/a816411e-a302-4bfc-b635-72574ad27374" />
+
+###  Prewitt Edge Detector:
+```
+image = cv2.imread("C:\\Users\\sup\\OneDrive\\Desktop\\sup\\image.jpg") 
+
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+prewitt_x = np.array([[1, 0, -1],
+                      [1, 0, -1],
+                      [1, 0, -1]])
+
+prewitt_y = np.array([[1, 1, 1],
+                      [0, 0, 0],
+                      [-1, -1, -1]])
+
+prewitt_x_edge = cv2.filter2D(gray, -1, prewitt_x)
+prewitt_y_edge = cv2.filter2D(gray, -1, prewitt_y)
+prewitt = cv2.magnitude(prewitt_x_edge.astype(np.float32),
+                        prewitt_y_edge.astype(np.float32))
+
+plt.imshow(canny_edges, cmap='gray')
+plt.title('Prewitt Edge Detection')
+plt.axis('off')
+```
+### Output:
+<img width="883" height="517" alt="image" src="https://github.com/user-attachments/assets/0e731b99-c768-4ca8-b917-18c7ac37e66c" />
+
 
 ###  Roberts Edge Detector
-- Detects edges using diagonal gradients  
-- Sensitive to noise  
+```
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+image = cv2.imread(r"C:\Users\sup\OneDrive\Desktop\sup\image.jpg")
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+roberts_x = np.array([[1, 0],
+                      [0, -1]], dtype=np.float32)
+
+roberts_y = np.array([[0, 1],
+                      [-1, 0]], dtype=np.float32)
+
+gx = cv2.filter2D(gray, cv2.CV_32F, roberts_x)
+gy = cv2.filter2D(gray, cv2.CV_32F, roberts_y)
+
+roberts = cv2.magnitude(gx, gy)
+roberts = cv2.normalize(roberts, None, 0, 255, cv2.NORM_MINMAX)
+roberts = roberts.astype(np.uint8)
+
+plt.imshow(roberts, cmap="gray")
+plt.title("Roberts Edge Detection")
+plt.axis("off")
+plt.show()
+```
+### Output:
+<img width="935" height="630" alt="image" src="https://github.com/user-attachments/assets/441bf6b8-a373-4047-9093-f40e1092aa3f" />
+
+
 
 ###  Laplacian Edge Detector
-- Detects edges using second-order derivatives  
-- Highlights rapid intensity changes  
+```
+import cv2
+import matplotlib.pyplot as plt
+laplacian = cv2.Laplacian(gray_image, cv2.CV_64F)
+laplacian_8bit = cv2.convertScaleAbs(laplacian)
+plt.imshow(laplacian_8bit, cmap='gray')
+plt.title('Laplacian Edge Detection')
+plt.axis('off')
+plt.show()
+```
+### Output:
 
-###  Canny Edge Detector
-- Multi-stage edge detection  
-- Produces clean and thin edges  
+<img width="691" height="481" alt="image" src="https://github.com/user-attachments/assets/71425e90-7241-4618-9440-8f1822824501" />
 
----
+
+###  Canny Edge Detector:
+```
+import cv2
+import matplotlib.pyplot as plt
+canny_edges = cv2.Canny(gray_image, 50, 150)
+plt.imshow(canny_edges, cmap='gray')
+plt.title('Canny Edge Detection')
+plt.axis('off')
+plt.show()
+```
+### Output:
+<img width="705" height="467" alt="image" src="https://github.com/user-attachments/assets/65aaba93-ce55-482c-9ea4-66d9e1e29a5f" />
+
+
 
 ## Result
 
